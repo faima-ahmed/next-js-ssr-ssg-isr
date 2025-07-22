@@ -1,12 +1,18 @@
-export default async function Home() {
+import { getData } from "@/src/lib/getData";
+
+export default async function Static() {
+  const posts = await getData("http://localhost:8000/posts");
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-bold">Static Pages</h1>
       <div>
-        Static rendering is useful for UI with no data or data that is shared
-        across users, such as a static blog post or a product page. It might not
-        be a good fit for a dashboard that has personalized data which is
-        regularly updated.
+        <ul className="flex flex-col gap-4 list-image-[url(/checkmark.svg)] m-5">
+          {posts.map((post) => (
+            <li className="pl-2" key={post.id}>
+              {post.title}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
